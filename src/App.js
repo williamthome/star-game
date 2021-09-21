@@ -10,14 +10,20 @@ const utils = {
   randomArrayItem: (arr) => arr[arr.length * Math.random() | 0],
   sum: (arr) => arr.reduce((total, current) => total + current, 0),
   randomSum: function (arr) {
+    if (arr.length === 1) return arr[0]
+
     const sum = new Set()
+    sum.add(this.sum(arr))
+
     for (const item of arr) {
       sum.add(item)
       const otherItems = arr.filter(i => i !== item)
+      sum.add(this.sum(otherItems))
       for (const other of otherItems) {
         sum.add(item + other)
       }
     }
+
     return this.randomArrayItem(
       Array.from(sum.values())
     )
