@@ -8,7 +8,20 @@ const utils = {
   ),
   randomInt: (min, max) => Math.floor((Math.random() * max) + min),
   randomArrayItem: (arr) => arr[arr.length * Math.random() | 0],
-  sum: (arr) => arr.reduce((total, current) => total + current, 0)
+  sum: (arr) => arr.reduce((total, current) => total + current, 0),
+  randomSum: function (arr) {
+    const sum = new Set()
+    for (const item of arr) {
+      sum.add(item)
+      const otherItems = arr.filter(i => i !== item)
+      for (const other of otherItems) {
+        sum.add(item + other)
+      }
+    }
+    return this.randomArrayItem(
+      Array.from(sum.values())
+    )
+  }
 }
 
 const buttonsStatuses = {
@@ -80,8 +93,8 @@ const NumberButtons = ({ count, statusFn, onClick }) => {
 function App() {
   const maxStarsCount = 9
 
-  const [starsCount, setStarsCount] = useState(utils.randomInt(1, maxStarsCount))
   const [availableNumbers, setAvailableNumbers] = useState(utils.range(1, maxStarsCount))
+  const [starsCount, setStarsCount] = useState(utils.randomSum(availableNumbers))
   const [candidateNumbers, setCandidateNumbers] = useState([])
 
   const numberStatus = (number) => {
@@ -111,7 +124,7 @@ function App() {
 
       setCandidateNumbers([])
       setAvailableNumbers(newAvailableNumbers)
-      setStarsCount(utils.randomArrayItem(newAvailableNumbers))
+      setStarsCount(utils.randomSum(newAvailableNumbers))
     } else {
       setCandidateNumbers(newCandidates)
     }
