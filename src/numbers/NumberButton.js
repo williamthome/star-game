@@ -3,6 +3,7 @@ export const NumberButton = (props) => {
   const { color, backgroundColor } = status
 
   return <button
+    className="number-button"
     style={{ color, backgroundColor }}
     onClick={onClick(number, status)}
   >

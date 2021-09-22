@@ -38,24 +38,26 @@ function App() {
         : used
 
   return (
-    <main className="App">
-      <div>
+    <main>
+      <header>
         <pre>Current: {starsCount}</pre>
         <pre>Available: [{availableNumbers.join(", ")}]</pre>
         <pre>Candidates: [{candidateNumbers.join(", ")}]</pre>
         <pre>Candidates sum: {sum(candidateNumbers)}</pre>
+      </header>
+      <div className="content">
+        <StarsDisplay
+          gameState={gameState}
+          starsCount={starsCount}
+        />
+        <NumbersDisplay
+          count={maxStarsCount}
+          statusFn={numberStatus}
+          onClick={handleNumberClick}
+        />
       </div>
-      <StarsDisplay
-        gameState={gameState}
-        starsCount={starsCount}
-      />
-      <NumbersDisplay
-        count={maxStarsCount}
-        statusFn={numberStatus}
-        onClick={handleNumberClick}
-      />
     </main>
-  );
+  )
 }
 
 export default App;

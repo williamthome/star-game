@@ -6,7 +6,7 @@ import { range } from '../utils'
 export const StarsDisplay = ({ gameState, starsCount }) => {
   return <>
     {gameState === GameState.PLAYING
-      ? <div className="stars">
+      ? <div className="display">
         {range(1, starsCount)
           .map(starId =>
             <Star key={starId} />

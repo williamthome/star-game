@@ -1,8 +1,8 @@
-import { NumberButton } from './NumberButton'
-import { range } from '../utils'
+import { NumberButton } from "./NumberButton"
+import { range } from "../utils"
 
 export const NumbersDisplay = ({ count, statusFn, onClick }) => {
-  return <div>
+  return <div className="display">
     {range(1, count)
       .map(number =>
         <NumberButton

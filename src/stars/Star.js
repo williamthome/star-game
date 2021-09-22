@@ -1,3 +1,3 @@
 export const Star = () => {
-  return <span>Star</span>
+  return <span className="star">⭐</span>
 }
