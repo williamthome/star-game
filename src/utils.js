@@ -15,7 +15,7 @@ const sum = (arr) => arr.reduce(
   (total, current) => total + current, 0
 )
 
-const randomSum = (arr) => {
+const randomSum = (arr, min, max) => {
   if (arr.length === 1) return arr[0]
 
   const sumSet = new Set()
@@ -32,7 +32,11 @@ const randomSum = (arr) => {
 
   const sumArray = Array.from(sumSet.values())
 
-  return randomArrayItem(sumArray)
+  return randomArrayItem(
+    !!min && !!max
+      ? sumArray.filter(v => v >= min && v <= max)
+      : sumArray
+  )
 }
 
 export {

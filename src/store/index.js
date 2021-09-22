@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { GameState } from '../constants'
-import * as utils from '../utils'
+import { range, randomSum, sum } from '../utils'
 
-const useGameState = (maxStarsCount) => {
-  const [availableNumbers, setAvailableNumbers] = useState(utils.range(1, maxStarsCount))
-  const [starsCount, setStarsCount] = useState(utils.randomSum(availableNumbers))
+const useGameState = (maxStarsCount, maxGuessCount) => {
+  const genStarsCount = (numbers) => randomSum(numbers, 1, maxGuessCount)
+
+  const [availableNumbers, setAvailableNumbers] = useState(range(1, maxStarsCount))
+  const [starsCount, setStarsCount] = useState(genStarsCount(availableNumbers))
   const [candidateNumbers, setCandidateNumbers] = useState([])
 
   const gameState =
@@ -18,11 +20,11 @@ const useGameState = (maxStarsCount) => {
 
     setCandidateNumbers([])
     setAvailableNumbers(newNumbers)
-    setStarsCount(utils.randomSum(newNumbers))
+    setStarsCount(genStarsCount(newNumbers))
   }
 
   const setGameState = (newCandidates) =>
-    utils.sum(newCandidates) === starsCount
+    sum(newCandidates) === starsCount
       ? starsCountMatch(availableNumbers, newCandidates)
       : setCandidateNumbers(newCandidates)
 

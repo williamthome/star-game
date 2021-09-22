@@ -7,6 +7,7 @@ import { sum } from './utils'
 
 function App() {
   const maxStarsCount = 9
+  const maxGuessCount = maxStarsCount * 3
 
   const {
     starsCount,
@@ -14,7 +15,7 @@ function App() {
     candidateNumbers,
     gameState,
     setGameState
-  } = useGameState(maxStarsCount)
+  } = useGameState(maxStarsCount, maxGuessCount)
 
   const { used, available, candidate, wrong } = ButtonsStatuses
 
