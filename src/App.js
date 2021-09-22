@@ -2,20 +2,28 @@ import './App.css';
 import { useGameState } from './store'
 import { StarsDisplay } from './stars'
 import { NumbersDisplay } from './numbers'
-import { ButtonsStatuses } from './constants'
+import { Timer } from './timer'
+import { TimeoutContext } from './global'
+import { ButtonsStatuses, GameState } from './constants'
 import { sum } from './utils'
 
 function App() {
-  const maxStarsCount = 9
-  const maxGuessCount = maxStarsCount * 3
+  const config = {
+    maxStarsCount: 9,
+    maxGuessCount: 18,
+    timeout: 10
+  }
 
   const {
     starsCount,
     availableNumbers,
     candidateNumbers,
     gameState,
-    setGameState
-  } = useGameState(maxStarsCount, maxGuessCount)
+    setNewCandidates,
+    time,
+    setTime,
+    setTimeout
+  } = useGameState(config)
 
   const { used, available, candidate, wrong } = ButtonsStatuses
 
@@ -26,7 +34,7 @@ function App() {
       ? candidateNumbers.filter(n => n !== number)
       : [number, ...candidateNumbers]
 
-    setGameState(newCandidates)
+    setNewCandidates(newCandidates)
   }
 
   const numberStatus = (number) =>
@@ -45,6 +53,12 @@ function App() {
         <pre>Available: [{availableNumbers.join(", ")}]</pre>
         <pre>Candidates: [{candidateNumbers.join(", ")}]</pre>
         <pre>Candidates sum: {sum(candidateNumbers)}</pre>
+        <TimeoutContext.Provider value={{ time, setTime }}>
+          <Timer
+            isRunning={gameState === GameState.PLAYING}
+            onTimeout={setTimeout}
+          />
+        </TimeoutContext.Provider>
       </header>
       <div className="content">
         <StarsDisplay
@@ -52,7 +66,7 @@ function App() {
           starsCount={starsCount}
         />
         <NumbersDisplay
-          count={maxStarsCount}
+          count={config.maxStarsCount}
           statusFn={numberStatus}
           onClick={handleNumberClick}
         />
