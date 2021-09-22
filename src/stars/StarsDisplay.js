@@ -3,7 +3,7 @@ import { Star } from './Star'
 import { PlayAgain } from './PlayAgain'
 import { range } from '../utils'
 
-export const StarsDisplay = ({ gameState, starsCount }) => {
+export const StarsDisplay = ({ gameState, starsCount, onPlayAgainClick }) => {
   return <>
     {gameState === GameState.PLAYING
       ? <div className="display">
@@ -13,6 +13,9 @@ export const StarsDisplay = ({ gameState, starsCount }) => {
           )
         }
       </div>
-      : <PlayAgain gameState={gameState} />}
+      : <PlayAgain
+        gameState={gameState}
+        onPlayAgainClick={onPlayAgainClick}
+      />}
   </>
 }
